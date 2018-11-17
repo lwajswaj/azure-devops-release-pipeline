@@ -3,6 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {},
   "variables": {},
-  "resources": [],
+  "resources": [
+    {
+
+    }
+  ],
   "outputs": {}
 }

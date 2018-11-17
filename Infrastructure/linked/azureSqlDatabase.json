@@ -1,0 +1,182 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "sqlServerName": {
+      "type": "string"
+    },
+    "sqlServerAdminUsername": {
+      "type": "string"
+    },
+    "sqlServerAdminPassword": {
+      "type": "securestring"
+    },
+    "databaseNamesArray": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "List of DBs names to be created"
+      }
+    },
+    "sku": {
+      "type": "object",
+      "defaultValue": {
+        "name": "Basic",
+        "tier": "Basic"
+      }
+    },
+    "maxSizeBytes": {
+      "type": "integer",
+      "defaultValue": 524288000
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    }
+  },
+  "variables": {
+    "storageAccountName": "[concat(toLower(parameters('sqlServerName')),'stg01')]",
+    "collation": "SQL_Latin1_General_CP1_CI_AS"
+  },
+  "functions": [
+    {
+      "namespace": "CTPE",
+      "members": {
+        "getUri": {
+          "parameters": [
+            {
+              "name": "uri",
+              "type": "string"
+            }
+          ],
+          "output": {
+            "type": "string",
+            "value": "[substring(parameters('uri'),0,add(lastIndexOf(parameters('uri'),'/'),1))]"
+          }
+        },
+        "getUriToken": {
+          "parameters": [
+            {
+              "name": "uri",
+              "type": "string"
+            }
+          ],
+          "output": {
+            "type": "string",
+            "value": "[if(not(equals(indexOf(parameters('uri'),'?'),-1)),substring(parameters('uri'),indexOf(parameters('uri'),'?')),'')]"
+          }
+        }
+      }
+    }
+  ],
+  "resources": [
+    {
+      "name": "[variables('storageAccountName')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "templateLink": {
+          "uri": "[concat(CTPE.getUri(deployment().properties.templateLink.uri),'storageAccount.json',CTPE.getUriToken(deployment().properties.templateLink.uri))]"
+        },
+        "parameters": {
+          "storageAccountName": {
+            "value": "[variables('storageAccountName')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        },
+        "mode": "Incremental"
+      },
+      "dependsOn": []
+    },
+    {
+      "name": "[parameters('sqlServerName')]",
+      "type": "Microsoft.Sql/servers",
+      "location": "[parameters('location')]",
+      "apiVersion": "2015-05-01-preview",
+      "dependsOn": [],
+      "properties": {
+        "administratorLogin": "[parameters('sqlServerAdminUsername')]",
+        "administratorLoginPassword": "[parameters('sqlServerAdminPassword')]",
+        "version": "12.0"
+      }
+    },
+    {
+      "name": "[concat(parameters('sqlServerName'), '/', parameters('databaseNamesArray')[copyIndex()])]",
+      "apiVersion": "2017-10-01-preview",
+      "type": "Microsoft.Sql/servers/databases",
+      "dependsOn": [
+        "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'))]"
+      ],
+      "location": "[parameters('location')]",
+      "properties": {
+        "collation": "[variables('collation')]",
+        "maxSizeBytes": "[parameters('maxSizeBytes')]",
+        "sampleName": "",
+        "zoneRedundant": false,
+        "licenseType": "",
+        "sku": "[parameters('sku')]",
+        "type": "databases"
+      },
+      "resources": [
+        {
+          "name": "current",
+          "type": "transparentDataEncryption",
+          "dependsOn": [
+            "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'), '/databases/', parameters('databaseNamesArray')[copyIndex()])]"
+          ],
+          "location": null,
+          "apiVersion": "2014-04-01-preview",
+          "properties": {
+            "status": "Enabled"
+          }
+        },
+        {
+          "apiVersion": "2014-04-01-preview",
+          "type": "securityAlertPolicies",
+          "name": "DatabaseSecurityAlertPolicies",
+          "dependsOn": [
+            "[variables('storageAccountName')]",
+            "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'), '/databases/', parameters('databaseNamesArray')[copyIndex()])]",
+            "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'), '/databases/', parameters('databaseNamesArray')[copyIndex()], '/transparentDataEncryption/current')]"
+          ],
+          "properties": {
+            "state": "Enabled",
+            "disabledAlerts": "",
+            "emailAddresses": [],
+            "emailAccountAdmins": "Enabled",
+            "retentionDays": "365",
+            "storageEndpoint": "[concat('https://', variables('storageAccountName'),'.blob.core.windows.net')]",
+            "storageAccountAccessKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
+          }
+        },
+        {
+          "apiVersion": "2015-05-01-preview",
+          "type": "auditingSettings",
+          "name": "DatabaseAuditingPolicies",
+          "dependsOn": [
+            "[variables('storageAccountName')]",
+            "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'), '/databases/', parameters('databaseNamesArray')[copyIndex()])]",
+            "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'), '/databases/', parameters('databaseNamesArray')[copyIndex()], '/transparentDataEncryption/current')]",
+            "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'), '/databases/', parameters('databaseNamesArray')[copyIndex()], '/securityAlertPolicies/DatabaseSecurityAlertPolicies')]"
+          ],
+          "properties": {
+            "State": "Enabled",
+            "storageEndpoint": "[concat('https://', variables('storageAccountName'),'.blob.core.windows.net')]",
+            "storageAccountAccessKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]",
+            "retentionDays": 365,
+            "auditActionsAndGroups": null,
+            "storageAccountSubscriptionId": "[subscription().subscriptionId]"
+          }
+        }
+      ],
+      "copy": {
+        "name": "databaseCount",
+        "count": "[length(parameters('databaseNamesArray'))]",
+        "mode": "Parallel"
+      }
+    }
+  ],
+  "outputs": {}
+}
