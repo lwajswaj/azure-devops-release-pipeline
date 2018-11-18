@@ -29,7 +29,7 @@
     }
   },
   "variables": {
-    "storageAccountName": "[toLower(parameters('storageAccountName'))]"
+    "storageAccountName": "[replace(toLower(parameters('storageAccountName')),'-','')]"
   },
   "resources": [
     {

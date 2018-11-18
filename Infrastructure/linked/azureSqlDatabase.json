@@ -26,7 +26,7 @@
       }
     },
     "maxSizeBytes": {
-      "type": "integer",
+      "type": "int",
       "defaultValue": 524288000
     },
     "location": {
@@ -131,44 +131,6 @@
           "properties": {
             "status": "Enabled"
           }
-        },
-        {
-          "apiVersion": "2014-04-01-preview",
-          "type": "securityAlertPolicies",
-          "name": "DatabaseSecurityAlertPolicies",
-          "dependsOn": [
-            "[variables('storageAccountName')]",
-            "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'), '/databases/', parameters('databaseNamesArray')[copyIndex()])]",
-            "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'), '/databases/', parameters('databaseNamesArray')[copyIndex()], '/transparentDataEncryption/current')]"
-          ],
-          "properties": {
-            "state": "Enabled",
-            "disabledAlerts": "",
-            "emailAddresses": [],
-            "emailAccountAdmins": "Enabled",
-            "retentionDays": "365",
-            "storageEndpoint": "[concat('https://', variables('storageAccountName'),'.blob.core.windows.net')]",
-            "storageAccountAccessKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
-          }
-        },
-        {
-          "apiVersion": "2015-05-01-preview",
-          "type": "auditingSettings",
-          "name": "DatabaseAuditingPolicies",
-          "dependsOn": [
-            "[variables('storageAccountName')]",
-            "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'), '/databases/', parameters('databaseNamesArray')[copyIndex()])]",
-            "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'), '/databases/', parameters('databaseNamesArray')[copyIndex()], '/transparentDataEncryption/current')]",
-            "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'), '/databases/', parameters('databaseNamesArray')[copyIndex()], '/securityAlertPolicies/DatabaseSecurityAlertPolicies')]"
-          ],
-          "properties": {
-            "State": "Enabled",
-            "storageEndpoint": "[concat('https://', variables('storageAccountName'),'.blob.core.windows.net')]",
-            "storageAccountAccessKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]",
-            "retentionDays": 365,
-            "auditActionsAndGroups": null,
-            "storageAccountSubscriptionId": "[subscription().subscriptionId]"
-          }
         }
       ],
       "copy": {
@@ -178,5 +140,10 @@
       }
     }
   ],
-  "outputs": {}
+  "outputs": {
+    "server": {
+      "type": "object",
+      "value": "[reference(parameters('sqlServerName'), '2015-05-01-preview', 'Full')]"
+    }
+  }
 }

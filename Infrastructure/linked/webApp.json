@@ -15,7 +15,7 @@
     "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]"
-    
+    }
   },
   "variables": {
     "appServicePlanSkuName": "F1",
@@ -82,8 +82,6 @@
           "nodeVersion": "",
           "pythonVersion": "",
           "linuxFxVersion": "",
-          "use32BitWorkerProcess": false,
-          "alwaysOn": true,
           "httpLoggingEnabled": true
         },
         "httpsOnly": true
