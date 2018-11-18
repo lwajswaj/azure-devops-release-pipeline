@@ -70,6 +70,28 @@
       }
     },
     {
+      "name": "KeyVault-VSTS-AccessPolicies",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "dependsOn": [
+        "KeyVault"
+      ],
+      "properties": {
+        "templateLink": {
+          "uri": "[concat(parameters('artifactsURI'),'keyVaultAccessPolicies.json',parameters('artifactSasToken'))]"
+        },
+        "parameters": {
+          "existingKeyvaultName": {
+            "value": "[variables('keyVault_Name')]"
+          },
+          "objectID": {
+            "value": "[parameters('automationObjectId')]"
+          }
+        },
+        "mode": "Incremental"
+      }
+    },
+    {
       "name": "AppInsights",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
