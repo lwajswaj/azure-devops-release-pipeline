@@ -1,0 +1,140 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "appInsightName": {
+        "type": "string"
+      },
+      "location": {
+        "type": "string",
+        "allowedValues": [
+          "Canada Central",
+          "Central India",
+          "East US",
+          "North Europe",
+          "South Central US",
+          "Southeast Asia",
+          "West Europe",
+          "West US 2"
+        ]
+      },
+      "portalExperienceResourceIds": {
+        "type": "array"
+      },
+      "DisplayName": {
+        "type": "string",
+        "defaultValue": "AppInsights Components"
+      }
+    },
+    "variables": {
+      "storageAccountName": "[concat(toLower(parameters('appInsightName')),'stg01')]",
+      "copy": [
+        {
+          "name": "portalExperience",
+          "count": "[length(parameters('portalExperienceResourceIds'))]",
+          "input": {
+            "[concat('hidden-link:', parameters('portalExperienceResourceIds')[copyindex('portalExperience')])]": "Resource"
+          }
+        }
+      ]
+    },
+    "functions": [
+      {
+        "namespace": "CTPE",
+        "members": {
+          "arrayToHash": {
+            "parameters": [
+              {
+                "name": "arrayObject",
+                "type": "array"
+              }
+            ],
+            "output": {
+              "type": "object",
+              "value": "[json(concat('{',replace(replace(replace(replace(string(parameters('arrayObject')),'[',''),']',''),'{',''),'}',''),'}'))]"
+            }
+          },
+          "newTagObject": {
+            "parameters": [
+              {
+                "name": "displayName",
+                "type": "string"
+              },
+              {
+                "name": "value",
+                "type": "string"
+              }
+            ],
+            "output": {
+              "type": "object",
+              "value": "[json(concat('{\"',parameters('displayName'),'\": \"', parameters('value'), '\"}'))]"
+            }
+          },
+          "getUri": {
+            "parameters": [
+              {
+                "name": "uri",
+                "type": "string"
+              }
+            ],
+            "output": {
+              "type": "string",
+              "value": "[substring(parameters('uri'),0,add(lastIndexOf(parameters('uri'),'/'),1))]"
+            }
+          },
+          "getUriToken": {
+            "parameters": [
+              {
+                "name": "uri",
+                "type": "string"
+              }
+            ],
+            "output": {
+              "type": "string",
+              "value": "[if(not(equals(indexOf(parameters('uri'),'?'),-1)),substring(parameters('uri'),indexOf(parameters('uri'),'?')),'')]"
+            }
+          }
+        }
+      }
+    ],
+    "resources": [
+      {
+        "type": "Microsoft.Insights/components",
+        "apiVersion": "2015-05-01",
+        "name": "[parameters('appInsightName')]",
+        "location": "[parameters('Location')]",
+        "tags": "[union(CTPE.arrayToHash(variables('portalExperience')),CTPE.newTagObject('displayName',parameters('DisplayName')))]",
+        "dependsOn": [],
+        "properties": {
+          "Application_Type": "web",
+          "ApplicationId": "[parameters('appInsightName')]"
+        }
+      },
+      {
+        "name": "[variables('storageAccountName')]",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2017-05-10",
+        "properties": {
+          "templateLink": {
+            "uri": "[concat(CTPE.getUri(deployment().properties.templateLink.uri),'storageAccount.json',CTPE.getUriToken(deployment().properties.templateLink.uri))]"
+          },
+          "parameters": {
+            "storageAccountName": {
+              "value": "[variables('storageAccountName')]"
+            },
+            "location": {
+              "value": "[parameters('location')]"
+            }
+          },
+          "mode": "Incremental"
+        },
+        "dependsOn": []
+      }
+    ],
+    "outputs": {
+      "result": {
+        "type": "object",
+        "value": "[reference(parameters('appInsightName'), '2015-05-01', 'Full')]"
+      }
+    }
+}

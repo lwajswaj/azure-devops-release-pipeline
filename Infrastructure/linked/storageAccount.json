@@ -1,0 +1,80 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "storageAccountName": {
+      "type": "string"
+    },
+    "containers": {
+      "type": "array",
+      "defaultValue": [
+        
+      ]
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "sku": {
+      "type": "string",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_GRS",
+        "Standard_RAGRS",
+        "Standard_ZRS",
+        "Premium_LRS",
+        "Premium_ZRS"
+      ],
+      "defaultValue": "Standard_LRS"
+    }
+  },
+  "variables": {
+    "storageAccountName": "[replace(toLower(parameters('storageAccountName')),'-','')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2018-02-01",
+      "name": "[variables('storageAccountName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [],
+      "sku": {
+        "name": "[parameters('sku')]"
+      },
+      "kind": "StorageV2",
+      "properties": {
+        "encryption": {
+          "services": {
+            "blob": {
+              "enabled": true
+            },
+            "file": {
+              "enabled": true
+            }
+          },
+          "keySource": "Microsoft.Storage"
+        },
+        "supportsHttpsTrafficOnly": true
+      }
+    },
+    {
+      "condition": "[not(empty(parameters('containers')))]",
+      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+      "apiVersion": "2018-03-01-preview",
+      "copy": {
+        "name": "containerLoop",
+        "count": "[if(not(empty(parameters('containers'))),length(parameters('containers')), 1)]"
+      },
+      "name": "[concat(variables('storageAccountName'),'/default/',if(not(empty(parameters('containers'))),parameters('containers')[copyIndex('containerLoop')], 'dummyValue'))]",
+      "dependsOn": [
+        "[variables('storageAccountName')]"
+      ]
+    }
+  ],
+  "outputs": {
+    "result": {
+      "type": "object",
+      "value": "[reference(variables('storageAccountName'), '2018-02-01', 'Full')]"
+    }
+  }
+}

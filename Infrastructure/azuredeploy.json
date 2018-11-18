@@ -1,0 +1,186 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentName": {
+      "type": "string"
+    },
+    "automationObjectId": {
+      "type": "string",
+      "maxLength": 36,
+      "minLength": 36
+    },
+    "location": {
+      "type":"string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "appInsightsLocation": {
+      "type": "string",
+      "allowedValues": [
+        "Canada Central",
+        "Central India",
+        "East US",
+        "North Europe",
+        "South Central US",
+        "Southeast Asia",
+        "West Europe",
+        "West US 2"
+      ]
+    },
+    "sqlServerAdminUsername":{
+      "type": "string"
+    },
+    "sqlServerAdminPassword": {
+      "type": "securestring"
+    },
+    "artifactsURI": {
+      "type": "string"
+    },
+    "artifactSasToken": {
+      "type": "securestring"
+    }
+  },
+  "variables": {
+    "envName": "[if(equals(parameters('environmentName'),'Production'),'',concat('-',toLower(parameters('environmentName'))))]",
+    "webApp_Name": "[concat('myagenda',variables('envName'))]",
+    "sqlServer_Name": "[concat('myagenda-sql',variables('envName'))]",
+    "databaseName": "[concat('Agenda',variables('envName'))]",
+    "keyVault_Name": "[concat('myagenda-vault',variables('envName'))]",
+    "appInsights_Name": "[concat('myagenda-aai',variables('envName'))]",
+    "appInsights_portalExperienceResourceIds": [
+      "[concat(resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('webApp_Name'))]"
+    ]
+  },
+  "resources": [
+    {
+      "name": "KeyVault",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [],
+      "properties": {
+        "templateLink": {
+          "uri": "[concat(parameters('artifactsURI'),'keyVault.json',parameters('artifactSasToken'))]"
+        },
+        "parameters": {
+          "keyvaultName": {
+            "value": "[variables('keyVault_Name')]"
+          }
+        },
+        "mode": "Incremental"
+      }
+    },
+    {
+      "name": "KeyVault-VSTS-AccessPolicies",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "dependsOn": [
+        "KeyVault"
+      ],
+      "properties": {
+        "templateLink": {
+          "uri": "[concat(parameters('artifactsURI'),'keyVaultAccessPolicies.json',parameters('artifactSasToken'))]"
+        },
+        "parameters": {
+          "existingKeyvaultName": {
+            "value": "[variables('keyVault_Name')]"
+          },
+          "objectID": {
+            "value": "[parameters('automationObjectId')]"
+          }
+        },
+        "mode": "Incremental"
+      }
+    },
+    {
+      "name": "AppInsights",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [],
+      "properties": {
+        "templateLink": {
+          "uri": "[concat(parameters('artifactsURI'),'appInsights.json',parameters('artifactSasToken'))]"
+        },
+        "parameters": {
+          "appInsightName": {
+            "value": "[variables('appInsights_Name')]"
+          },
+          "location": {
+            "value": "[parameters('appInsightsLocation')]"
+          },
+          "portalExperienceResourceIds": {
+            "value": "[variables('appInsights_portalExperienceResourceIds')]"
+          }
+        },
+        "mode": "Incremental"
+      }
+    },
+    {
+      "name": "Database",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [],
+      "properties": {
+        "templateLink": {
+          "uri": "[concat(parameters('artifactsURI'),'azureSqlDatabase.json',parameters('artifactSasToken'))]"
+        },
+        "parameters": {
+          "sqlServerName": {
+            "value": "[variables('sqlServer_Name')]"
+          },
+          "sqlServerAdminUsername": {
+            "value": "[parameters('sqlServerAdminUsername')]"
+          },
+          "sqlServerAdminPassword": {
+            "value": "[parameters('sqlServerAdminPassword')]"
+          },
+          "databaseNamesArray": {
+            "value": [
+              "[variables('databaseName')]"
+            ]
+          }
+        },
+        "mode": "Incremental"
+      }
+    },
+    {
+      "name": "Website",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [
+        "AppInsights"
+      ],
+      "properties": {
+        "templateLink": {
+          "uri": "[concat(parameters('artifactsURI'),'webApp.json',parameters('artifactSasToken'))]"
+        },
+        "parameters": {
+          "siteName": {
+            "value": "[variables('webApp_Name')]"
+          },
+          "existingAppInsightsResourceId": {
+            "value": "[reference('AppInsights').outputs.result.value.resourceId]"
+          }
+        },
+        "mode": "Incremental"
+      }
+    }
+  ],
+  "outputs": {
+    "ARM_Website_Name": {
+      "type": "string",
+      "value": "[variables('webApp_Name')]"
+    },
+    "ARM_KeyVault_Name": {
+      "type": "string",
+      "value": "[variables('keyVault_Name')]"
+    },
+    "ARM_SqlServer_FQDN": {
+      "type": "string",
+      "value": "[reference('Database').outputs.server.value.properties.fullyQualifiedDomainName]"
+    },
+    "ARM_Database_Name": {
+      "type": "string",
+      "value": "[variables('databaseName')]"
+    }
+  }
+}
