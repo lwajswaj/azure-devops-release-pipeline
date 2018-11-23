@@ -1,0 +1,246 @@
+{
+    "variables": {
+        "system.debug": {
+            "value": "false",
+            "allowOverride": true
+        }
+    },
+    "retentionRules": [
+        {
+            "branches": [
+                "+refs/heads/*"
+            ],
+            "artifacts": [],
+            "artifactTypesToDelete": [
+                "FilePath",
+                "SymbolStore"
+            ],
+            "daysToKeep": 10,
+            "minimumToKeep": 1,
+            "deleteBuildRecord": true,
+            "deleteTestResults": true
+        }
+    ],
+    "properties": {},
+    "tags": [],
+    "_links": {
+        "self": {
+            "href": "https://lwajswaj.visualstudio.com/42831e03-c942-4138-9f4d-30594381d959/_apis/build/Definitions/11?revision=2"
+        },
+        "web": {
+            "href": "https://lwajswaj.visualstudio.com/42831e03-c942-4138-9f4d-30594381d959/_build/definition?definitionId=11"
+        },
+        "editor": {
+            "href": "https://lwajswaj.visualstudio.com/42831e03-c942-4138-9f4d-30594381d959/_build/designer?id=11&_a=edit-build-definition"
+        },
+        "badge": {
+            "href": "https://lwajswaj.visualstudio.com/42831e03-c942-4138-9f4d-30594381d959/_apis/build/status/11"
+        }
+    },
+    "jobAuthorizationScope": 1,
+    "jobTimeoutInMinutes": 60,
+    "jobCancelTimeoutInMinutes": 5,
+    "badgeEnabled": true,
+    "process": {
+        "phases": [
+            {
+                "steps": [
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": false,
+                        "displayName": "Run Pester",
+                        "timeoutInMinutes": 0,
+                        "condition": "succeeded()",
+                        "task": {
+                            "id": "e213ff0f-5d5c-4791-802d-52ea3e7be1f1",
+                            "versionSpec": "2.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "targetType": "filePath",
+                            "filePath": "Infrastructure/scripts/Run-Pester.ps1",
+                            "arguments": "-TestFilePattern \"Infrastructure/azureDeploy.tests.ps1\"",
+                            "script": "# Write your powershell commands here.\n\nWrite-Host \"Hello World\"\n\n# Use the environment variables input below to pass secret variables to this script.",
+                            "errorActionPreference": "stop",
+                            "failOnStderr": "false",
+                            "ignoreLASTEXITCODE": "false",
+                            "pwsh": "false",
+                            "workingDirectory": ""
+                        }
+                    },
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": true,
+                        "displayName": "Publish Pester Results",
+                        "timeoutInMinutes": 0,
+                        "condition": "succeededOrFailed()",
+                        "task": {
+                            "id": "0b0f01ed-7dde-43ff-9cbb-e48954daf9b1",
+                            "versionSpec": "2.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "testRunner": "NUnit",
+                            "testResultsFiles": "**/TEST-*.xml",
+                            "searchFolder": "$(Common.TestResultsDirectory)",
+                            "mergeTestResults": "false",
+                            "testRunTitle": "",
+                            "platform": "",
+                            "configuration": "",
+                            "publishRunAttachments": "true"
+                        }
+                    },
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": false,
+                        "displayName": "Build",
+                        "timeoutInMinutes": 0,
+                        "condition": "succeeded()",
+                        "task": {
+                            "id": "e213ff0f-5d5c-4791-802d-52ea3e7be1f1",
+                            "versionSpec": "2.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "targetType": "filePath",
+                            "filePath": "Infrastructure/build.ps1",
+                            "arguments": "",
+                            "script": "# Write your powershell commands here.\n\nWrite-Host \"Hello World\"\n\n# Use the environment variables input below to pass secret variables to this script.",
+                            "errorActionPreference": "stop",
+                            "failOnStderr": "false",
+                            "ignoreLASTEXITCODE": "false",
+                            "pwsh": "false",
+                            "workingDirectory": ""
+                        }
+                    },
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": false,
+                        "displayName": "Publish Artifact: Infrastructure",
+                        "timeoutInMinutes": 0,
+                        "condition": "succeeded()",
+                        "task": {
+                            "id": "2ff763a7-ce83-4e1f-bc89-0ae63477cebe",
+                            "versionSpec": "1.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "PathtoPublish": "Infrastructure/output",
+                            "ArtifactName": "Infrastructure",
+                            "ArtifactType": "Container",
+                            "TargetPath": "",
+                            "Parallel": "false",
+                            "ParallelCount": "8"
+                        }
+                    }
+                ],
+                "name": "Agent job 1",
+                "refName": "Phase_1",
+                "condition": "succeeded()",
+                "target": {
+                    "executionOptions": {
+                        "type": 0
+                    },
+                    "allowScriptsAuthAccessOption": false,
+                    "type": 1
+                },
+                "jobAuthorizationScope": 1,
+                "jobCancelTimeoutInMinutes": 1
+            }
+        ],
+        "type": 1
+    },
+    "repository": {
+        "properties": {
+            "apiUrl": "https://api.github.com/repos/lwajswaj/azure-devops-release-pipeline",
+            "branchesUrl": "https://api.github.com/repos/lwajswaj/azure-devops-release-pipeline/branches",
+            "cloneUrl": "https://github.com/lwajswaj/azure-devops-release-pipeline.git",
+            "fullName": "lwajswaj/azure-devops-release-pipeline",
+            "manageUrl": "https://github.com/lwajswaj/azure-devops-release-pipeline",
+            "refsUrl": "https://api.github.com/repos/lwajswaj/azure-devops-release-pipeline/git/refs",
+            "defaultBranch": "master",
+            "connectedServiceId": "d98ed093-e38d-4f36-8a3a-5b7ac677cde5",
+            "isPrivate": "False",
+            "isFork": "False",
+            "ownerAvatarUrl": "https://avatars2.githubusercontent.com/u/6439324?v=4",
+            "lastUpdated": "11/18/2018 22:19:11",
+            "nodeId": "MDEwOlJlcG9zaXRvcnkxNTY3ODI4NTk=",
+            "hasAdminPermissions": "True",
+            "safeOwnerId": "99C06035D8160445BB3C57620B0EF086DC9C7E57CE179147F15B0408A6C4CCB6150124C464DEAAF18658F38A7F6CAB693F9891D9CBCE2B681FEEA19F2421",
+            "safeRepository": "azure-devops-release-pipeline",
+            "ownerIsAUser": "True",
+            "checkoutNestedSubmodules": "false",
+            "cleanOptions": "0",
+            "fetchDepth": "0",
+            "gitLfsSupport": "false",
+            "reportBuildStatus": "true",
+            "skipSyncSource": "false",
+            "labelSourcesFormat": "$(build.buildNumber)",
+            "labelSources": "0"
+        },
+        "id": "lwajswaj/azure-devops-release-pipeline",
+        "type": "GitHub",
+        "name": "lwajswaj/azure-devops-release-pipeline",
+        "url": "https://github.com/lwajswaj/azure-devops-release-pipeline.git",
+        "defaultBranch": "master",
+        "clean": "false",
+        "checkoutSubmodules": false
+    },
+    "processParameters": {},
+    "quality": 1,
+    "authoredBy": {
+        "displayName": "Leandro Wajswajn Pereyra",
+        "url": "https://app.vssps.visualstudio.com/Aab3f9b82-bd6f-4267-bbff-ef9366f9101f/_apis/Identities/491d440d-eda6-42f6-a69e-3b0637d8babb",
+        "_links": {
+            "avatar": {
+                "href": "https://lwajswaj.visualstudio.com/_apis/GraphProfile/MemberAvatars/msa.NjU3YzRiNzktNWI4OC03ZWU2LTgwNDEtZGFlNjc5YzMxYzFh"
+            }
+        },
+        "id": "491d440d-eda6-42f6-a69e-3b0637d8babb",
+        "uniqueName": "leandrowp@outlook.com",
+        "imageUrl": "https://lwajswaj.visualstudio.com/_api/_common/identityImage?id=491d440d-eda6-42f6-a69e-3b0637d8babb",
+        "descriptor": "msa.NjU3YzRiNzktNWI4OC03ZWU2LTgwNDEtZGFlNjc5YzMxYzFh"
+    },
+    "drafts": [],
+    "queue": {
+        "_links": {
+            "self": {
+                "href": "https://lwajswaj.visualstudio.com/_apis/build/Queues/76"
+            }
+        },
+        "id": 76,
+        "name": "Hosted VS2017",
+        "url": "https://lwajswaj.visualstudio.com/_apis/build/Queues/76",
+        "pool": {
+            "id": 4,
+            "name": "Hosted VS2017",
+            "isHosted": true
+        }
+    },
+    "id": 11,
+    "name": "My Agenda-Infrastructure",
+    "url": "https://lwajswaj.visualstudio.com/42831e03-c942-4138-9f4d-30594381d959/_apis/build/Definitions/11?revision=2",
+    "uri": "vstfs:///Build/Definition/11",
+    "path": "\\",
+    "type": 2,
+    "queueStatus": 0,
+    "revision": 2,
+    "createdDate": "2018-11-18T22:49:35.360Z",
+    "project": {
+        "id": "42831e03-c942-4138-9f4d-30594381d959",
+        "name": "EY DevOps Meetup",
+        "url": "https://lwajswaj.visualstudio.com/_apis/projects/42831e03-c942-4138-9f4d-30594381d959",
+        "state": 1,
+        "revision": 127,
+        "visibility": 2,
+        "defaultTeamImageUrl": null
+    }
+}

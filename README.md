@@ -2,7 +2,10 @@
 
 In order to show how to integrate infrastructure and application in a single repo with a single pipeline, this repo was put in place. It contains a very simple agenda web application written in .NET Core with a SQL Server DB as backend. The architecture of the application looks like this:
 
-![MyAgenda-Diagram](media/MyAgenda-Diagram.jpg)
+![MyAgenda-Diagram](_media/MyAgenda-Diagram.jpg)
+
+## Folder: _Pipeline
+This folder contains the export for both Build and Relaese pipelines from Azure DevOps (former VSTS)
 
 ## Folder: Application
 This folder contains the application code which is an MVC .NET Core 2.0 app which makes use of EF (Entity Framework) Core in database-first mode.
