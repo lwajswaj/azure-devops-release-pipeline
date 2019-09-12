@@ -125,13 +125,13 @@
         "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'))]"
       ],
       "location": "[parameters('location')]",
+      "sku": "[parameters('sku')]",
       "properties": {
         "collation": "[variables('collation')]",
         "maxSizeBytes": "[parameters('maxSizeBytes')]",
         "sampleName": "",
         "zoneRedundant": false,
         "licenseType": "",
-        "sku": "[parameters('sku')]",
         "type": "databases"
       },
       "resources": [
