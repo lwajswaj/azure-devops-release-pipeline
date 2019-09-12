@@ -70,7 +70,7 @@
             }
           ],
           "virtualApplications": "[union(variables('defaultVirtualApplications'),parameters('virtualApplications'))]",
-          "minTlsVersion": "1.1",
+          "minTlsVersion": "1.2",
           "defaultDocuments": [
             "index.html"
           ],
@@ -84,7 +84,7 @@
           "linuxFxVersion": "",
           "httpLoggingEnabled": true
         },
-        "httpsOnly": false
+        "httpsOnly": true
       },
       "resources": [
         {
