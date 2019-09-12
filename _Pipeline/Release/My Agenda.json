@@ -1,0 +1,651 @@
+{
+    "source": 2,
+    "revision": 10,
+    "description": null,
+    "createdBy": {
+        "displayName": "Leandro Wajswajn Pereyra",
+        "url": "https://app.vssps.visualstudio.com/Aab3f9b82-bd6f-4267-bbff-ef9366f9101f/_apis/Identities/491d440d-eda6-42f6-a69e-3b0637d8babb",
+        "_links": {
+            "avatar": {
+                "href": "https://lwajswaj.visualstudio.com/_apis/GraphProfile/MemberAvatars/msa.NjU3YzRiNzktNWI4OC03ZWU2LTgwNDEtZGFlNjc5YzMxYzFh"
+            }
+        },
+        "id": "491d440d-eda6-42f6-a69e-3b0637d8babb",
+        "uniqueName": "leandrowp@outlook.com",
+        "imageUrl": "https://lwajswaj.visualstudio.com/_api/_common/identityImage?id=491d440d-eda6-42f6-a69e-3b0637d8babb",
+        "descriptor": "msa.NjU3YzRiNzktNWI4OC03ZWU2LTgwNDEtZGFlNjc5YzMxYzFh"
+    },
+    "createdOn": "2018-11-18T23:09:29.000Z",
+    "modifiedBy": {
+        "displayName": "Leandro Wajswajn Pereyra",
+        "url": "https://app.vssps.visualstudio.com/Aab3f9b82-bd6f-4267-bbff-ef9366f9101f/_apis/Identities/491d440d-eda6-42f6-a69e-3b0637d8babb",
+        "_links": {
+            "avatar": {
+                "href": "https://lwajswaj.visualstudio.com/_apis/GraphProfile/MemberAvatars/msa.NjU3YzRiNzktNWI4OC03ZWU2LTgwNDEtZGFlNjc5YzMxYzFh"
+            }
+        },
+        "id": "491d440d-eda6-42f6-a69e-3b0637d8babb",
+        "uniqueName": "leandrowp@outlook.com",
+        "imageUrl": "https://lwajswaj.visualstudio.com/_api/_common/identityImage?id=491d440d-eda6-42f6-a69e-3b0637d8babb",
+        "descriptor": "msa.NjU3YzRiNzktNWI4OC03ZWU2LTgwNDEtZGFlNjc5YzMxYzFh"
+    },
+    "modifiedOn": "2018-11-19T11:46:45.140Z",
+    "isDeleted": false,
+    "variables": {
+        "Artifacts_Container": {
+            "value": "myagenda/$(Release.Artifacts.Infrastructure.BuildNumber)"
+        },
+        "Artifacts_ResourceGroupName": {
+            "value": "Management"
+        },
+        "Artifacts_StorageAccountName": {
+            "value": "2bbc4f45f7ae41b2a6c8ad0"
+        },
+        "ResourceGroupName": {
+            "value": "MyAgenda-$(Release.EnvironmentName)"
+        },
+        "VSTS_ObjectId": {
+            "value": "cf707aa3-3ecd-4981-8aee-c11cb5dff69f"
+        }
+    },
+    "variableGroups": [
+        1
+    ],
+    "environments": [
+        {
+            "id": 1,
+            "name": "Dev",
+            "rank": 1,
+            "owner": {
+                "displayName": "Leandro Wajswajn Pereyra",
+                "url": "https://app.vssps.visualstudio.com/Aab3f9b82-bd6f-4267-bbff-ef9366f9101f/_apis/Identities/491d440d-eda6-42f6-a69e-3b0637d8babb",
+                "_links": {
+                    "avatar": {
+                        "href": "https://lwajswaj.visualstudio.com/_apis/GraphProfile/MemberAvatars/msa.NjU3YzRiNzktNWI4OC03ZWU2LTgwNDEtZGFlNjc5YzMxYzFh"
+                    }
+                },
+                "id": "491d440d-eda6-42f6-a69e-3b0637d8babb",
+                "uniqueName": "leandrowp@outlook.com",
+                "imageUrl": "https://lwajswaj.visualstudio.com/_api/_common/identityImage?id=491d440d-eda6-42f6-a69e-3b0637d8babb",
+                "descriptor": "msa.NjU3YzRiNzktNWI4OC03ZWU2LTgwNDEtZGFlNjc5YzMxYzFh"
+            },
+            "variables": {
+                "AppInsights_Location": {
+                    "value": "South Central US"
+                },
+                "Location": {
+                    "value": "North Central US"
+                }
+            },
+            "variableGroups": [],
+            "preDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 1
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": 1
+                }
+            },
+            "deployStep": {
+                "id": 2
+            },
+            "postDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 3
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": 2
+                }
+            },
+            "deployPhases": [
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": 0
+                        },
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": []
+                        },
+                        "queueId": 76,
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 1,
+                    "phaseType": 1,
+                    "name": "Agent job",
+                    "refName": null,
+                    "workflowTasks": [
+                        {
+                            "environment": {},
+                            "taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+                            "version": "3.*",
+                            "name": "Stage Linked Templates",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceName": "",
+                                "ConnectedServiceNameARM": "5c3d5a95-3319-436c-b15b-d3b9c30638a1",
+                                "ScriptType": "FilePath",
+                                "ScriptPath": "$(System.DefaultWorkingDirectory)/Infrastructure/Infrastructure/scripts/Sync-Files2Blob.ps1",
+                                "Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments",
+                                "ScriptArguments": "-Path \"$(System.DefaultWorkingDirectory)\\Infrastructure\\Infrastructure\\armtemplates\" -StorageAccountName \"$(Artifacts_StorageAccountName)\" -ResourceGroup \"$(Artifacts_ResourceGroupName)\" -Container \"$(Artifacts_Container)\"",
+                                "errorActionPreference": "stop",
+                                "FailOnStandardError": "false",
+                                "TargetAzurePs": "LatestVersion",
+                                "CustomTargetAzurePs": ""
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+                            "version": "3.*",
+                            "name": "Generate SAS Token",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceName": "",
+                                "ConnectedServiceNameARM": "5c3d5a95-3319-436c-b15b-d3b9c30638a1",
+                                "ScriptType": "FilePath",
+                                "ScriptPath": "$(System.DefaultWorkingDirectory)/Infrastructure/Infrastructure/scripts/New-StorageAccountSASToken.ps1",
+                                "Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments",
+                                "ScriptArguments": "-Name \"$(Artifacts_StorageAccountName)\" -ResourceGroupName \"$(Artifacts_ResourceGroupName)\" -ContainerPath \"$(Artifacts_Container)\"",
+                                "errorActionPreference": "stop",
+                                "FailOnStandardError": "false",
+                                "TargetAzurePs": "LatestVersion",
+                                "CustomTargetAzurePs": ""
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "94a74903-f93f-4075-884f-dc11f34058b4",
+                            "version": "2.*",
+                            "name": "Deploy Infrastructure",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceName": "5c3d5a95-3319-436c-b15b-d3b9c30638a1",
+                                "action": "Create Or Update Resource Group",
+                                "resourceGroupName": "$(ResourceGroupName)",
+                                "location": "$(Location)",
+                                "templateLocation": "Linked artifact",
+                                "csmFileLink": "",
+                                "csmParametersFileLink": "",
+                                "csmFile": "$(System.DefaultWorkingDirectory)/Infrastructure/Infrastructure/armtemplates/azuredeploy.json",
+                                "csmParametersFile": "",
+                                "overrideParameters": "-environmentName \"$(Release.EnvironmentName)\" -automationObjectId \"$(VSTS_ObjectId)\" -location \"$(Location)\" -appInsightsLocation \"$(AppInsights_Location)\" -sqlServerAdminUsername \"$(SQL-AdminUser)\" -sqlServerAdminPassword \"$(SQL-AdminPassword)\" -artifactsURI \"$(artifactsURI)\" -artifactSasToken \"$(artifactSasToken)\"",
+                                "deploymentMode": "Incremental",
+                                "enableDeploymentPrerequisites": "None",
+                                "deploymentGroupEndpoint": "",
+                                "project": "",
+                                "deploymentGroupName": "",
+                                "copyAzureVMTags": "true",
+                                "runAgentServiceAsUser": "false",
+                                "userName": "",
+                                "password": "",
+                                "outputVariable": "",
+                                "deploymentOutputs": ""
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "584bcff2-3353-4f11-872b-6ba01267a972",
+                            "version": "4.*",
+                            "name": "Parse ARM Outputs",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceNameARM": "5c3d5a95-3319-436c-b15b-d3b9c30638a1",
+                                "resourceGroupName": "$(ResourceGroupName)",
+                                "prefix": "",
+                                "outputNames": "",
+                                "whenLastDeploymentIsFailed": "fail",
+                                "deploymentNameFilter": "azuredeploy"
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+                            "version": "3.*",
+                            "name": "Generate DB constrained user",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceName": "",
+                                "ConnectedServiceNameARM": "5c3d5a95-3319-436c-b15b-d3b9c30638a1",
+                                "ScriptType": "FilePath",
+                                "ScriptPath": "$(System.DefaultWorkingDirectory)/Infrastructure/Infrastructure/scripts/Initialize-KeyVault.ps1",
+                                "Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments",
+                                "ScriptArguments": "-KeyVaultName \"$(ARM_KeyVault_Name)\" -Product \"MeetUp\" -Application \"MyAgenda\" -Prefix \"sql\" -EnvironmentName \"$(Release.EnvironmentName)\"",
+                                "errorActionPreference": "stop",
+                                "FailOnStandardError": "false",
+                                "TargetAzurePs": "LatestVersion",
+                                "CustomTargetAzurePs": ""
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "ce85a08b-a538-4d2b-8589-1d37a9ab970f",
+                            "version": "1.*",
+                            "name": "Create DB Constrained Login",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceName": "",
+                                "ConnectedServiceNameARM": "5c3d5a95-3319-436c-b15b-d3b9c30638a1",
+                                "ServerName": "$(ARM_SqlServer_FQDN)",
+                                "DatabaseName": "master",
+                                "SqlUsername": "$(SQL-AdminUser)",
+                                "SqlPassword": "$(SQL-AdminPassword)",
+                                "DeploymentAction": "Publish",
+                                "TaskNameSelector": "InlineSqlTask",
+                                "DacpacFile": "",
+                                "BacpacFile": "",
+                                "SqlFile": "",
+                                "SqlInline": "if not exists (select * from sys.sql_logins where name='$(API_DBUserName)')\n  CREATE LOGIN $(API_DBUserName) WITH PASSWORD = '$(API_DBUserPassword)'\n\nif not exists (select * from sys.sysusers where name='$(API_DBUserName)')\n  CREATE USER $(API_DBUserName) FOR LOGIN $(API_DBUserName)",
+                                "PublishProfile": "",
+                                "AdditionalArguments": "",
+                                "SqlAdditionalArguments": "",
+                                "InlineAdditionalArguments": "",
+                                "IpDetectionMethod": "AutoDetect",
+                                "StartIpAddress": "",
+                                "EndIpAddress": "",
+                                "DeleteFirewallRule": "true"
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "ce85a08b-a538-4d2b-8589-1d37a9ab970f",
+                            "version": "1.*",
+                            "name": "Grant db_owner Rights to Constrained Login",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceName": "",
+                                "ConnectedServiceNameARM": "5c3d5a95-3319-436c-b15b-d3b9c30638a1",
+                                "ServerName": "$(ARM_SqlServer_FQDN)",
+                                "DatabaseName": "$(ARM_Database_Name)",
+                                "SqlUsername": "$(SQL-AdminUser)",
+                                "SqlPassword": "$(SQL-AdminPassword)",
+                                "DeploymentAction": "Publish",
+                                "TaskNameSelector": "InlineSqlTask",
+                                "DacpacFile": "",
+                                "BacpacFile": "",
+                                "SqlFile": "",
+                                "SqlInline": "if not exists (select * from sys.sysusers where name='$(API_DBUserName)')\n  CREATE USER $(API_DBUserName) FOR LOGIN $(API_DBUserName)\nGO\n\nEXEC sp_addrolemember N'db_owner', N'$(API_DBUserName)'",
+                                "PublishProfile": "",
+                                "AdditionalArguments": "",
+                                "SqlAdditionalArguments": "",
+                                "InlineAdditionalArguments": "",
+                                "IpDetectionMethod": "AutoDetect",
+                                "StartIpAddress": "",
+                                "EndIpAddress": "",
+                                "DeleteFirewallRule": "true"
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "e213ff0f-5d5c-4791-802d-52ea3e7be1f1",
+                            "version": "2.*",
+                            "name": "Create Website Transformation",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "targetType": "inline",
+                                "filePath": "",
+                                "arguments": "",
+                                "script": "Write-Host \"##vso[task.setvariable variable=ConnectionStrings.AgendaDatabase;issecret=true]Server=tcp:$(ARM_SqlServer_FQDN);Database=$(ARM_Database_Name);User ID=$(API_DBUserName)@$(ARM_SqlServer_FQDN);Password=$(API_DBUserPassword);Trusted_Connection=False;Encrypt=True;\"",
+                                "errorActionPreference": "stop",
+                                "failOnStderr": "false",
+                                "ignoreLASTEXITCODE": "false",
+                                "pwsh": "false",
+                                "workingDirectory": ""
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "497d490f-eea7-4f2b-ab94-48d9c1acdcb1",
+                            "version": "3.*",
+                            "name": "Deploy Website",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceName": "5c3d5a95-3319-436c-b15b-d3b9c30638a1",
+                                "WebAppKind": "app",
+                                "WebAppName": "$(ARM_Website_Name)",
+                                "DeployToSlotFlag": "false",
+                                "ResourceGroupName": "",
+                                "SlotName": "",
+                                "ImageSource": "Registry",
+                                "AzureContainerRegistry": "",
+                                "AzureContainerRegistryLoginServer": "",
+                                "AzureContainerRegistryImage": "",
+                                "AzureContainerRegistryTag": "",
+                                "DockerRepositoryAccess": "public",
+                                "RegistryConnectedServiceName": "",
+                                "PrivateRegistryImage": "",
+                                "PrivateRegistryTag": "",
+                                "DockerNamespace": "",
+                                "DockerRepository": "",
+                                "DockerImageTag": "",
+                                "VirtualApplication": "",
+                                "Package": "$(System.DefaultWorkingDirectory)/Application/Application/Application.zip",
+                                "BuiltinLinuxPackage": "$(System.DefaultWorkingDirectory)/**/*.zip",
+                                "RuntimeStack": "",
+                                "StartupCommand": "",
+                                "WebAppUri": "",
+                                "ScriptType": "",
+                                "InlineScript": ":: You can provide your deployment commands here. One command per line.",
+                                "ScriptPath": "",
+                                "GenerateWebConfig": "false",
+                                "WebConfigParameters": "",
+                                "AppSettings": "",
+                                "ConfigurationSettings": "",
+                                "TakeAppOfflineFlag": "true",
+                                "UseWebDeploy": "false",
+                                "SetParametersFile": "",
+                                "RemoveAdditionalFilesFlag": "false",
+                                "ExcludeFilesFromAppDataFlag": "false",
+                                "AdditionalArguments": "",
+                                "RenameFilesFlag": "false",
+                                "XmlTransformation": "false",
+                                "XmlVariableSubstitution": "false",
+                                "JSONFiles": "appsettings.json"
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "ce85a08b-a538-4d2b-8589-1d37a9ab970f",
+                            "version": "1.*",
+                            "name": "Deploy Database",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceName": "",
+                                "ConnectedServiceNameARM": "5c3d5a95-3319-436c-b15b-d3b9c30638a1",
+                                "ServerName": "$(ARM_SqlServer_FQDN)",
+                                "DatabaseName": "$(ARM_Database_Name)",
+                                "SqlUsername": "$(SQL-AdminUser)",
+                                "SqlPassword": "$(SQL-AdminPassword)",
+                                "DeploymentAction": "Publish",
+                                "TaskNameSelector": "DacpacTask",
+                                "DacpacFile": "$(System.DefaultWorkingDirectory)/Application/Application/Database/bin/Output/Database.dacpac",
+                                "BacpacFile": "",
+                                "SqlFile": "",
+                                "SqlInline": "if not exists (select * from sys.sysusers where name='$(API_DBUserName)')\n  CREATE USER $(API_DBUserName) FOR LOGIN $(API_DBUserName)\nGO\n\nEXEC sp_addrolemember N'db_owner', N'$(API_DBUserName)'",
+                                "PublishProfile": "",
+                                "AdditionalArguments": "",
+                                "SqlAdditionalArguments": "",
+                                "InlineAdditionalArguments": "",
+                                "IpDetectionMethod": "AutoDetect",
+                                "StartIpAddress": "",
+                                "EndIpAddress": "",
+                                "DeleteFirewallRule": "true"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "environmentOptions": {
+                "emailNotificationType": "OnlyOnFailure",
+                "emailRecipients": "release.environment.owner;release.creator",
+                "skipArtifactsDownload": false,
+                "timeoutInMinutes": 0,
+                "enableAccessToken": false,
+                "publishDeploymentStatus": true,
+                "badgeEnabled": false,
+                "autoLinkWorkItems": false,
+                "pullRequestDeploymentEnabled": false
+            },
+            "demands": [],
+            "conditions": [
+                {
+                    "name": "ReleaseStarted",
+                    "conditionType": 1,
+                    "value": ""
+                }
+            ],
+            "executionPolicy": {
+                "concurrencyCount": 1,
+                "queueDepthCount": 0
+            },
+            "schedules": [],
+            "currentRelease": {
+                "id": 8,
+                "url": "https://lwajswaj.vsrm.visualstudio.com/42831e03-c942-4138-9f4d-30594381d959/_apis/Release/releases/8",
+                "_links": {}
+            },
+            "retentionPolicy": {
+                "daysToKeep": 30,
+                "releasesToKeep": 3,
+                "retainBuild": true
+            },
+            "processParameters": {},
+            "properties": {},
+            "preDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "postDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "environmentTriggers": [],
+            "badgeUrl": "https://lwajswaj.vsrm.visualstudio.com/_apis/public/Release/badge/42831e03-c942-4138-9f4d-30594381d959/1/1"
+        }
+    ],
+    "artifacts": [
+        {
+            "sourceId": "42831e03-c942-4138-9f4d-30594381d959:10",
+            "type": "Build",
+            "alias": "Application",
+            "definitionReference": {
+                "artifactSourceDefinitionUrl": {
+                    "id": "https://lwajswaj.visualstudio.com/_permalink/_build/index?collectionId=0a0ad761-735d-43be-bb07-e06310eb53f6&projectId=42831e03-c942-4138-9f4d-30594381d959&definitionId=10",
+                    "name": ""
+                },
+                "defaultVersionBranch": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionSpecific": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionTags": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionType": {
+                    "id": "latestType",
+                    "name": "Latest"
+                },
+                "definition": {
+                    "id": "10",
+                    "name": "My Agenda-Application"
+                },
+                "definitions": {
+                    "id": "",
+                    "name": ""
+                },
+                "IsMultiDefinitionType": {
+                    "id": "False",
+                    "name": "False"
+                },
+                "project": {
+                    "id": "42831e03-c942-4138-9f4d-30594381d959",
+                    "name": "EY DevOps Meetup"
+                },
+                "repository": {
+                    "id": "77d0e551-af26-4ea1-9493-3f26af6223b4",
+                    "name": "EY DevOps Meetup"
+                }
+            },
+            "isPrimary": true,
+            "isRetained": false
+        },
+        {
+            "sourceId": "42831e03-c942-4138-9f4d-30594381d959:11",
+            "type": "Build",
+            "alias": "Infrastructure",
+            "definitionReference": {
+                "artifactSourceDefinitionUrl": {
+                    "id": "https://lwajswaj.visualstudio.com/_permalink/_build/index?collectionId=0a0ad761-735d-43be-bb07-e06310eb53f6&projectId=42831e03-c942-4138-9f4d-30594381d959&definitionId=11",
+                    "name": ""
+                },
+                "defaultVersionBranch": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionSpecific": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionTags": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionType": {
+                    "id": "latestType",
+                    "name": "Latest"
+                },
+                "definition": {
+                    "id": "11",
+                    "name": "My Agenda-Infrastructure"
+                },
+                "definitions": {
+                    "id": "",
+                    "name": ""
+                },
+                "IsMultiDefinitionType": {
+                    "id": "False",
+                    "name": "False"
+                },
+                "project": {
+                    "id": "42831e03-c942-4138-9f4d-30594381d959",
+                    "name": "EY DevOps Meetup"
+                },
+                "repository": {
+                    "id": "77d0e551-af26-4ea1-9493-3f26af6223b4",
+                    "name": "EY DevOps Meetup"
+                }
+            },
+            "isRetained": false
+        }
+    ],
+    "triggers": [],
+    "releaseNameFormat": "Release-$(rev:r)",
+    "tags": [],
+    "properties": {
+        "DefinitionCreationSource": {
+            "$type": "System.String",
+            "$value": "Other"
+        }
+    },
+    "id": 1,
+    "name": "My Agenda",
+    "path": "\\",
+    "projectReference": null,
+    "url": "https://lwajswaj.vsrm.visualstudio.com/42831e03-c942-4138-9f4d-30594381d959/_apis/Release/definitions/1",
+    "_links": {
+        "self": {
+            "href": "https://lwajswaj.vsrm.visualstudio.com/42831e03-c942-4138-9f4d-30594381d959/_apis/Release/definitions/1"
+        },
+        "web": {
+            "href": "https://lwajswaj.visualstudio.com/42831e03-c942-4138-9f4d-30594381d959/_release?definitionId=1"
+        }
+    }
+}
