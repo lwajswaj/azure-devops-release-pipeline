@@ -19,15 +19,13 @@
   },
   "variables": {
     "appServicePlanSkuName": "F1",
-    "appServicePlanSkCapacity": 2,
     "appServicePlanName": "[concat(parameters('siteName'),'_ASP001')]",
     "defaultVirtualApplications": [
       {
         "virtualPath": "/",
         "physicalPath": "site\\wwwroot"
       }
-    ],
-    "logRetentionDays": 0
+    ]
   },
   "resources": [
     {
