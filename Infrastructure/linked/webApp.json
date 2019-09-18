@@ -82,7 +82,7 @@
           "linuxFxVersion": "",
           "httpLoggingEnabled": true
         },
-        "httpsOnly": false
+        "httpsOnly": true
       },
       "resources": [
         {
